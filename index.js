@@ -17,8 +17,8 @@ app.use(express.json()); // for receiving data in req.body
 app.use(express.urlencoded({ extended: true })); // allows data in url string
 
 // Routes
-app.use("/dashboard/users", userRouter);
-app.use("/dashboard/exercises", exerciseRouter);
+app.use("/api/users", userRouter);
+app.use("/api/exercises", exerciseRouter);
 
 
 // Main page
