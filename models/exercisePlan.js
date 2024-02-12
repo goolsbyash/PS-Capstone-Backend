@@ -34,6 +34,12 @@ const exercisePlanSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
+  // Use user's _id to associate with specific account
+  owner: {
+    type: Number,
+    required: true,
+    default: 0
+  }
 });
 
 export default mongoose.model("ExercisePlan", exercisePlanSchema);
