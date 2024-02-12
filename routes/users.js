@@ -12,8 +12,6 @@ router.get("/:id", async (req, res) => {
 
 // TODO: Route for updating account info
 
-
-
 router.post("/signin", async (req, res) => {
   // user auth
 });
@@ -28,7 +26,6 @@ router.post("/signup", async (req, res) => {
   } else {
     // create new user
     const newUser = await User.create(req.body);
-   
     console.log(newUser._id);
     res.status(200).json(newUser._id);
   }
@@ -37,11 +34,11 @@ router.post("/signup", async (req, res) => {
 router.delete("/:id/delete", async (req, res) => {
   let userId = req.params.id;
   try {
-    let deleteUser = await User.deleteOne({_id: userId});
+    let deleteUser = await User.deleteOne({ _id: userId });
   } catch (error) {
     console.log(error);
   }
-  res.status(200).send('Account deleted successfully.');
+  res.status(200).send("Account deleted successfully.");
 });
 
 export default router;
