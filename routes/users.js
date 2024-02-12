@@ -26,8 +26,7 @@ router.post("/signup", async (req, res) => {
   } else {
     // create new user
     const newUser = await User.create(req.body);
-    console.log(newUser._id);
-    res.status(200).json(newUser._id);
+    res.status(200).json(newUser);
   }
 });
 
