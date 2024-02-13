@@ -36,7 +36,7 @@ const exercisePlanSchema = new mongoose.Schema({
   },
   // Use user's _id to associate with specific account
   owner: {
-    type: Number,
+    type: String,
     required: true,
     default: 0
   }
