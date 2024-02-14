@@ -3,14 +3,24 @@ import ExercisePlan from "../models/exercisePlan.js";
 
 const router = new Router();
 
-// GET All Plans
-router.get("/", async (req, res) => {
-  const plans = await ExercisePlan.find({});
+// GET All Plans by owner field
+router.get("/owner/:id", async (req, res) => {
+  const ownerId = req.params.id;
+  const plans = await ExercisePlan.find({ owner: ownerId });
   res.status(200).json(plans);
 });
 
+// DELETE all plans by owner field
+router.delete("/owner/:id", async (req, res) => {
+  const ownerId = req.params.id;
+  const delPlans = await ExercisePlan.deleteMany({ owner: ownerId });
+  res.status(200).send("All plans deleted successfully.");
+});
+
 // GET active plan
+// TODO: Remove; add route to update active plan (goes to user router)
 router.get("/:id", async (req, res) => {
+  const ownerId = req.params.id;
   let activePlan = await ExercisePlan.find({ active: true });
   res.status(200).json(activePlan);
 });
