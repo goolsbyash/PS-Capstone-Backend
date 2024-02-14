@@ -16,6 +16,9 @@ const exerciseSchema = new mongoose.Schema({
     required: true,
     default: 1,
   },
+  uuid: {
+    type: String,
+  }
 });
 
 const exercisePlanSchema = new mongoose.Schema({
