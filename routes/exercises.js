@@ -16,19 +16,28 @@ router.post("/", async (req, res) => {
 // GET All Plans by owner field
 router.get("/owner/:id", async (req, res) => {
   const ownerId = req.params.id;
-  const plans = await ExercisePlan.find({ owner: ownerId });
-  console.log(plans);
-  if (plans) res.status(200).json(plans);
+  try {
+    const plans = await ExercisePlan.find({ owner: ownerId });
+    console.log(plans);
+    if (plans.length >= 1) res.status(200).json(plans);
+    else res.status(404);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // DELETE all plans by owner field
 router.delete("/owner/:id", async (req, res) => {
   const ownerId = req.params.id;
-  const delPlans = await ExercisePlan.deleteMany({ owner: ownerId });
+  try {
+    const delPlans = await ExercisePlan.deleteMany({ owner: ownerId });
 
-  if (delPlans) res.status(200).send("All plans deleted successfully.");
-  else {
-    res.status(404);
+    if (delPlans) res.status(200).send("All plans deleted successfully.");
+    else {
+      res.status(404);
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 
@@ -37,9 +46,11 @@ router.get("/active/:id", async (req, res) => {
   const ownerId = req.params.id;
   try {
     let activePlan = await ExercisePlan.find({ owner: ownerId, active: true });
-    if (activePlan) res.status(200).json(activePlan);
+    if (activePlan.length >= 1) res.status(200).json(activePlan);
     else res.status(404);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // Update name of specific plan
