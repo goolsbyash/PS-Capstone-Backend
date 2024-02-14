@@ -11,32 +11,35 @@ router.post("/", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-})
+});
 
 // GET All Plans by owner field
 router.get("/owner/:id", async (req, res) => {
   const ownerId = req.params.id;
   const plans = await ExercisePlan.find({ owner: ownerId });
-  res.status(200).json(plans);
+  console.log(plans);
+  if (plans) res.status(200).json(plans);
 });
 
 // DELETE all plans by owner field
 router.delete("/owner/:id", async (req, res) => {
   const ownerId = req.params.id;
   const delPlans = await ExercisePlan.deleteMany({ owner: ownerId });
-  
+
   if (delPlans) res.status(200).send("All plans deleted successfully.");
   else {
     res.status(404);
   }
 });
 
-// GET active plan
-// TODO: Remove; add route to update active plan (goes to user router)
-router.get("/:id", async (req, res) => {
+// GET active plan for the owner
+router.get("/active/:id", async (req, res) => {
   const ownerId = req.params.id;
-  let activePlan = await ExercisePlan.find({ active: true });
-  res.status(200).json(activePlan);
+  try {
+    let activePlan = await ExercisePlan.find({ owner: ownerId, active: true });
+    if (activePlan) res.status(200).json(activePlan);
+    else res.status(404);
+  } catch (error) {}
 });
 
 // Update name of specific plan
@@ -62,5 +65,4 @@ router.delete("/:id/delete", async (req, res) => {
   res.status(200).send("Plan deleted successfully.");
 });
 
-// TODO: DELETE specific exercises in the plan
 export default router;
