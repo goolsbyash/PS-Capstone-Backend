@@ -14,7 +14,11 @@ router.get("/owner/:id", async (req, res) => {
 router.delete("/owner/:id", async (req, res) => {
   const ownerId = req.params.id;
   const delPlans = await ExercisePlan.deleteMany({ owner: ownerId });
-  res.status(200).send("All plans deleted successfully.");
+  
+  if (delPlans) res.status(200).send("All plans deleted successfully.");
+  else {
+    res.status(404);
+  }
 });
 
 // GET active plan
