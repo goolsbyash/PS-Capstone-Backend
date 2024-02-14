@@ -3,6 +3,16 @@ import ExercisePlan from "../models/exercisePlan.js";
 
 const router = new Router();
 
+// Create new plan
+router.post("/", async (req, res) => {
+  try {
+    const newPlan = await ExercisePlan.create(req.body);
+    res.status(203).json(newPlan);
+  } catch (error) {
+    console.log(error);
+  }
+})
+
 // GET All Plans by owner field
 router.get("/owner/:id", async (req, res) => {
   const ownerId = req.params.id;
@@ -28,8 +38,6 @@ router.get("/:id", async (req, res) => {
   let activePlan = await ExercisePlan.find({ active: true });
   res.status(200).json(activePlan);
 });
-
-// Create plan
 
 // Update name of specific plan
 router.post("/:id", async (req, res) => {
